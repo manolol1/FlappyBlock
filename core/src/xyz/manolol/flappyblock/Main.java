@@ -1,6 +1,8 @@
 package xyz.manolol.flappyblock;
 
 import com.badlogic.gdx.Game;
+import com.kotcrab.vis.ui.VisUI;
+import xyz.manolol.flappyblock.screens.MainMenuScreen;
 
 public class Main extends Game {
 
@@ -9,5 +11,9 @@ public class Main extends Game {
 	@Override
 	public void create () {
 		GAME = this;
+
+		VisUI.load();
+
+		GAME.setScreen(new MainMenuScreen());
 	}
 }

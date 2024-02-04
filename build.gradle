@@ -9,7 +9,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.2'
+        classpath 'com.android.tools.build:gradle:8.2.0'
         
 
     }
@@ -27,6 +27,7 @@ allprojects {
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.2.1'
+        visuiVersion = '1.5.3'
     }
 
     repositories {
@@ -81,6 +82,7 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        api "com.kotcrab.vis:vis-ui:$visuiVersion"
         
     }
 }
