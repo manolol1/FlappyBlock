@@ -16,5 +16,8 @@ public class Constants {
 
     public static final float OBSTACLE_WIDTH = 2.5f;
     public static final float OBSTACLE_HOLE_Y_DISTANCE = 10.0f; // minimum distance of the hole from top/bottom
+    public static final float OBSTACLE_HOLE_START_SIZE = 10.0f;
     public static final Color OBSTACLE_COLOR = Color.FIREBRICK;
+    public static final float OBSTACLE_X_DISTANCE = 20.0f;
+    public static final float OBSTACLE_START_SPEED = 5.0f;
 }

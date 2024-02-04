@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import xyz.manolol.flappyblock.Constants;
-import xyz.manolol.flappyblock.screens.gameobjects.Obstacle;
+import xyz.manolol.flappyblock.screens.gameobjects.ObstacleManager;
 import xyz.manolol.flappyblock.screens.gameobjects.Player;
 
 public class GameScreen extends ScreenAdapter {
@@ -15,6 +15,7 @@ public class GameScreen extends ScreenAdapter {
     private final ShapeRenderer shapeRenderer;
 
     private final Player player;
+    private final ObstacleManager obstacleManager;
 
     public GameScreen() {
         camera = new OrthographicCamera();
@@ -22,6 +23,7 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer = new ShapeRenderer();
 
         player = new Player();
+        obstacleManager = new ObstacleManager();
     }
 
     @Override
@@ -33,6 +35,8 @@ public class GameScreen extends ScreenAdapter {
 
         player.update(delta);
         player.draw(shapeRenderer);
+
+        obstacleManager.update(delta, shapeRenderer);
 
         shapeRenderer.end();
     }
