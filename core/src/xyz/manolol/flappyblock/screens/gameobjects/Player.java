@@ -3,6 +3,7 @@ package xyz.manolol.flappyblock.screens.gameobjects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import xyz.manolol.flappyblock.Constants;
 
@@ -27,6 +28,9 @@ public class Player {
         }
 
         flapTimeLeft -= delta;
+
+        // keep player inside world bounds
+        rect.y = MathUtils.clamp(rect.y, 0, Constants.WORLD_HEIGHT - Constants.PLAYER_SIZE);
     }
 
     public void draw(ShapeRenderer shapeRenderer) {
