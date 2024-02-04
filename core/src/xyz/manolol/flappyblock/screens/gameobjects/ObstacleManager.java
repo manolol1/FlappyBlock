@@ -27,6 +27,8 @@ public class ObstacleManager {
             Obstacle obstacle = iterator.next();
             obstacle.posX -= obstacleSpeed * delta;
 
+            if (obstacle.posX < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
+
             obstacle.draw(shapeRenderer);
         }
     }
