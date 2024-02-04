@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kotcrab.vis.ui.VisUI;
 import xyz.manolol.flappyblock.utils.FontManager;
 
+import static xyz.manolol.flappyblock.Main.GAME;
+
 
 public class MainMenuScreen extends ScreenAdapter {
     private final OrthographicCamera camera;
@@ -51,7 +53,7 @@ public class MainMenuScreen extends ScreenAdapter {
         textButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                GAME.setScreen(new GameScreen());
             }
         });
         root.add(textButton);
