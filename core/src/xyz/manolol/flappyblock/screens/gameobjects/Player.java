@@ -16,7 +16,7 @@ public class Player {
 
     public void update(float delta) {
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && flapTimeLeft < 0.01f) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.justTouched() && flapTimeLeft < 0.01f) {
             flapTimeLeft = Constants.FLAP_TIME;
         }
 
