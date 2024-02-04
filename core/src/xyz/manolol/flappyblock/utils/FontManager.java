@@ -11,13 +11,11 @@ import com.badlogic.gdx.utils.ObjectMap;
 public class FontManager implements Disposable {
 
     private final FreeTypeFontGenerator fontGenerator;
-    private final GlyphLayout layout;
     private final FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private final ObjectMap<Integer, BitmapFont> fonts;
     public FontManager(String filePath) {
         this.fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal(filePath));
         this.parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        this.layout = new GlyphLayout();
         this.fonts = new ObjectMap<>();
     }
 
