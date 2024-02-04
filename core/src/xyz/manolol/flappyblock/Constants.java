@@ -3,11 +3,18 @@ package xyz.manolol.flappyblock;
 import com.badlogic.gdx.graphics.Color;
 
 public class Constants {
-    public static final float PLAYER_SIZE = 2.5f;
+    public static final float WORLD_WIDTH = 64;
+    public static final float WORLD_HEIGHT = 36;
+
+    public static final float PLAYER_SIZE = 2.0f;
     public static final float PLAYER_SPAWN_X = 5.0f;
     public static final float PLAYER_SPAWN_Y = 20.0f;
     public static final Color PLAYER_COLOR = Color.FOREST;
     public static final float FLAP_STRENGTH = 50.0f;
     public static final float FLAP_TIME = 0.05f;
     public static final float GRAVITY = -9.81f;
+
+    public static final float OBSTACLE_WIDTH = 2.5f;
+    public static final float OBSTACLE_HOLE_Y_DISTANCE = 10.0f; // minimum distance of the hole from top/bottom
+    public static final Color OBSTACLE_COLOR = Color.FIREBRICK;
 }
