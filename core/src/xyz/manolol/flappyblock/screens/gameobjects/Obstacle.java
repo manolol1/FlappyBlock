@@ -15,7 +15,7 @@ public class Obstacle {
     protected float posX;
 
     public Obstacle(float posX, float holeSize) {
-        holeStart = MathUtils.random(Constants.OBSTACLE_HOLE_Y_DISTANCE, Constants.WORLD_HEIGHT - Constants.OBSTACLE_HOLE_Y_DISTANCE);
+        holeStart = MathUtils.random(Constants.OBSTACLE_HOLE_Y_DISTANCE, Constants.WORLD_HEIGHT - Constants.OBSTACLE_HOLE_Y_DISTANCE - holeSize);
 
         this.posX = posX;
 
