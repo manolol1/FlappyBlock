@@ -37,4 +37,8 @@ public class Player {
         shapeRenderer.setColor(Constants.PLAYER_COLOR);
         shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
     }
+
+    public Rectangle getRect() {
+        return rect;
+    }
 }

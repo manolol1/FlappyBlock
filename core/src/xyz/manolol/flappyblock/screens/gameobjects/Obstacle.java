@@ -31,4 +31,12 @@ public class Obstacle {
         shapeRenderer.rect(top.x, top.y, top.width, top.height);
         shapeRenderer.rect(bottom.x, bottom.y, bottom.width, bottom.height);
     }
+
+    public Rectangle getTop() {
+        return top;
+    }
+
+    public Rectangle getBottom() {
+        return bottom;
+    }
 }

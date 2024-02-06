@@ -9,6 +9,8 @@ import xyz.manolol.flappyblock.Constants;
 import xyz.manolol.flappyblock.screens.gameobjects.ObstacleManager;
 import xyz.manolol.flappyblock.screens.gameobjects.Player;
 
+import static xyz.manolol.flappyblock.Main.GAME;
+
 public class GameScreen extends ScreenAdapter {
     private final OrthographicCamera camera;
     private final FitViewport viewport;
@@ -23,7 +25,7 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer = new ShapeRenderer();
 
         player = new Player();
-        obstacleManager = new ObstacleManager();
+        obstacleManager = new ObstacleManager(player);
     }
 
     @Override
@@ -37,6 +39,11 @@ public class GameScreen extends ScreenAdapter {
         player.draw(shapeRenderer);
 
         obstacleManager.update(delta, shapeRenderer);
+
+        if (obstacleManager.isGameOver()) {
+            GAME.setScreen(new GameOverScreen());
+            return;
+        }
 
         shapeRenderer.end();
     }
