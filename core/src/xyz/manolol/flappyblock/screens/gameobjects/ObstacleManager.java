@@ -1,13 +1,11 @@
 package xyz.manolol.flappyblock.screens.gameobjects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import xyz.manolol.flappyblock.Constants;
-import xyz.manolol.flappyblock.screens.GameOverScreen;
 
 import java.util.Iterator;
-
-import static xyz.manolol.flappyblock.Main.GAME;
 
 public class ObstacleManager {
     Array<Obstacle> obstacles;
@@ -16,6 +14,8 @@ public class ObstacleManager {
 
     private float obstacleHoleSize = Constants.OBSTACLE_HOLE_START_SIZE;
     private float obstacleSpeed = Constants.OBSTACLE_START_SPEED;
+
+    private float timeSinceLastDifficultyIncrease = 0.0f;
 
     private boolean isGameOver = false;
 
@@ -28,6 +28,21 @@ public class ObstacleManager {
     public void update(float delta, ShapeRenderer shapeRenderer) {
         if (obstacles.peek().posX < Constants.WORLD_WIDTH - Constants.OBSTACLE_X_DISTANCE) {
             spawnObstacle();
+        }
+
+        timeSinceLastDifficultyIncrease += delta;
+
+        if (timeSinceLastDifficultyIncrease > Constants.DIFFICULTY_INCREASE_INTERVAL) {
+            obstacleHoleSize -= Constants.OBSTACLE_HOLE_SIZE_DECREASE;
+            obstacleSpeed += Constants.OBSTACLE_SPEED_INCREASE;
+
+            if (obstacleHoleSize < Constants.OBSTACLE_HOLE_SIZE_MIN) obstacleHoleSize = Constants.OBSTACLE_HOLE_SIZE_MIN;
+            if (obstacleSpeed > Constants.OBSTACLE_SPEED_MAX) obstacleSpeed = Constants.OBSTACLE_SPEED_MAX;
+
+            timeSinceLastDifficultyIncrease = 0.0f;
+
+            Gdx.app.log("DIFFICULTY INCREASED",
+                    "obstacleHoleSize: " + obstacleHoleSize + " | " + "obstacleSpeed: " + obstacleSpeed);
         }
 
         Iterator<Obstacle> iterator = obstacles.iterator();
