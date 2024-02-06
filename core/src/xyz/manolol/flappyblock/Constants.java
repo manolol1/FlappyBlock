@@ -21,9 +21,9 @@ public class Constants {
     public static final float OBSTACLE_X_DISTANCE = 20.0f;
     public static final float OBSTACLE_START_SPEED = 5.0f;
 
-    public static final float DIFFICULTY_INCREASE_INTERVAL = 5.0f; // seconds
+    public static final float DIFFICULTY_INCREASE_INTERVAL = 4.0f; // seconds
     public static final float OBSTACLE_HOLE_SIZE_DECREASE = 0.1f;
     public static final float OBSTACLE_SPEED_INCREASE = 0.5f;
     public static final float OBSTACLE_HOLE_SIZE_MIN= 6.0f;
-    public static final float OBSTACLE_SPEED_MAX = 12.0f;
+    public static final float OBSTACLE_SPEED_MAX = 12.5f;
 }

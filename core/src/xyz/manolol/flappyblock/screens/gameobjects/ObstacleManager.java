@@ -22,7 +22,8 @@ public class ObstacleManager {
     public ObstacleManager(Player player) {
         this.player = player;
         obstacles = new Array<>();
-        spawnObstacle();
+        spawnObstacle(Constants.WORLD_WIDTH / 2);
+        spawnObstacle(Constants.WORLD_WIDTH / 2 + Constants.OBSTACLE_X_DISTANCE);
     }
 
     public void update(float delta, ShapeRenderer shapeRenderer) {
@@ -62,6 +63,10 @@ public class ObstacleManager {
 
     private void spawnObstacle() {
         obstacles.add(new Obstacle(Constants.WORLD_WIDTH, obstacleHoleSize));
+    }
+
+    private void spawnObstacle(float posX) {
+        obstacles.add(new Obstacle(posX, obstacleHoleSize));
     }
 
     public boolean isGameOver() {
