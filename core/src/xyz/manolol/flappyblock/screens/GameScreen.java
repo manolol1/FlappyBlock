@@ -19,13 +19,17 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final ObstacleManager obstacleManager;
 
-    public GameScreen() {
+    private final boolean easyMode;
+
+    public GameScreen(boolean easyMode) {
+        this.easyMode = easyMode;
+
         camera = new OrthographicCamera();
         viewport = new FitViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT, camera);
         shapeRenderer = new ShapeRenderer();
 
         player = new Player();
-        obstacleManager = new ObstacleManager(player);
+        obstacleManager = new ObstacleManager(player, easyMode);
     }
 
     @Override
@@ -41,7 +45,7 @@ public class GameScreen extends ScreenAdapter {
         obstacleManager.update(delta, shapeRenderer);
 
         if (obstacleManager.isGameOver()) {
-            GAME.setScreen(new GameOverScreen());
+            GAME.setScreen(new GameOverScreen(easyMode));
             return;
         }
 

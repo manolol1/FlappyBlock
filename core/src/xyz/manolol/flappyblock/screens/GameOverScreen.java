@@ -28,7 +28,11 @@ public class GameOverScreen extends ScreenAdapter {
     private Label label;
     private TextButton textButton;
 
-    public GameOverScreen() {
+    private final boolean easyMode;
+
+    public GameOverScreen(boolean easyMode) {
+        this.easyMode = easyMode;
+
         camera = new OrthographicCamera();
         viewport = new FitViewport(1920, 1080, camera);
         stage = new Stage(viewport);
@@ -53,10 +57,20 @@ public class GameOverScreen extends ScreenAdapter {
         textButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                GAME.setScreen(new GameScreen());
+                GAME.setScreen(new GameScreen(easyMode));
             }
         });
-        root.add(textButton);
+        root.add(textButton).width(400).row();
+
+        textButton = new TextButton("MAIN MENU", skin);
+        textButton.pad(15);
+        textButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                GAME.setScreen(new MainMenuScreen());
+            }
+        });
+        root.add(textButton).width(400);
 
     }
 

@@ -18,9 +18,11 @@ public class ObstacleManager {
     private float timeSinceLastDifficultyIncrease = 0.0f;
 
     private boolean isGameOver = false;
+    private final boolean easyMode;
 
-    public ObstacleManager(Player player) {
+    public ObstacleManager(Player player, boolean easyMode) {
         this.player = player;
+        this.easyMode = easyMode;
         obstacles = new Array<>();
         spawnObstacle(Constants.WORLD_WIDTH / 2);
         spawnObstacle(Constants.WORLD_WIDTH / 2 + Constants.OBSTACLE_X_DISTANCE);
@@ -31,19 +33,21 @@ public class ObstacleManager {
             spawnObstacle();
         }
 
-        timeSinceLastDifficultyIncrease += delta;
+        if (!easyMode) {
+            timeSinceLastDifficultyIncrease += delta;
 
-        if (timeSinceLastDifficultyIncrease > Constants.DIFFICULTY_INCREASE_INTERVAL) {
-            obstacleHoleSize -= Constants.OBSTACLE_HOLE_SIZE_DECREASE;
-            obstacleSpeed += Constants.OBSTACLE_SPEED_INCREASE;
+            if (timeSinceLastDifficultyIncrease > Constants.DIFFICULTY_INCREASE_INTERVAL) {
+                obstacleHoleSize -= Constants.OBSTACLE_HOLE_SIZE_DECREASE;
+                obstacleSpeed += Constants.OBSTACLE_SPEED_INCREASE;
 
-            if (obstacleHoleSize < Constants.OBSTACLE_HOLE_SIZE_MIN) obstacleHoleSize = Constants.OBSTACLE_HOLE_SIZE_MIN;
-            if (obstacleSpeed > Constants.OBSTACLE_SPEED_MAX) obstacleSpeed = Constants.OBSTACLE_SPEED_MAX;
+                if (obstacleHoleSize < Constants.OBSTACLE_HOLE_SIZE_MIN) obstacleHoleSize = Constants.OBSTACLE_HOLE_SIZE_MIN;
+                if (obstacleSpeed > Constants.OBSTACLE_SPEED_MAX) obstacleSpeed = Constants.OBSTACLE_SPEED_MAX;
 
-            timeSinceLastDifficultyIncrease = 0.0f;
+                timeSinceLastDifficultyIncrease = 0.0f;
 
-            Gdx.app.log("DIFFICULTY INCREASED",
-                    "obstacleHoleSize: " + obstacleHoleSize + " | " + "obstacleSpeed: " + obstacleSpeed);
+                Gdx.app.log("DIFFICULTY INCREASED",
+                        "obstacleHoleSize: " + obstacleHoleSize + " | " + "obstacleSpeed: " + obstacleSpeed);
+            }
         }
 
         Iterator<Obstacle> iterator = obstacles.iterator();
