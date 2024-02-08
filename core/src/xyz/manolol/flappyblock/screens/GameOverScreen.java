@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kotcrab.vis.ui.VisUI;
+import xyz.manolol.flappyblock.Constants;
 import xyz.manolol.flappyblock.utils.FontManager;
 import xyz.manolol.flappyblock.utils.PrefsManager;
 
@@ -25,7 +26,6 @@ public class GameOverScreen extends ScreenAdapter {
     private final FitViewport viewport;
     private final Stage stage;
     private final Skin skin;
-    private final FontManager fontManager;
     private final PrefsManager prefs;
     private Label label;
     private TextButton textButton;
@@ -38,11 +38,11 @@ public class GameOverScreen extends ScreenAdapter {
         this.newHighscore = newHighscore;
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(1920, 1080, camera);
+        viewport = new FitViewport(Constants.UI_WIDTH, Constants.UI_HEIGHT, camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         skin = VisUI.getSkin();
-        fontManager = new FontManager("fonts/Roboto-Regular.ttf");
+        FontManager fontManager = new FontManager("fonts/Roboto-Regular.ttf");
         prefs = new PrefsManager();
 
         Table root = new Table();

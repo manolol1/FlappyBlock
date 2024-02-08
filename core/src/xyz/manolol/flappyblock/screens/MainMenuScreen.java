@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kotcrab.vis.ui.VisUI;
+import xyz.manolol.flappyblock.Constants;
 import xyz.manolol.flappyblock.utils.FontManager;
 
 import static xyz.manolol.flappyblock.Main.GAME;
@@ -30,7 +31,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     public MainMenuScreen() {
         camera = new OrthographicCamera();
-        viewport = new FitViewport(1920, 1080, camera);
+        viewport = new FitViewport(Constants.UI_WIDTH, Constants.UI_HEIGHT, camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         skin = VisUI.getSkin();

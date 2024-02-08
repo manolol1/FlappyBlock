@@ -6,6 +6,9 @@ public class Constants {
     public static final float WORLD_WIDTH = 64;
     public static final float WORLD_HEIGHT = 36;
 
+    public static final float UI_WIDTH = 1920;
+    public static final float UI_HEIGHT = 1080;
+
     public static final float PLAYER_SIZE = 2.0f;
     public static final float PLAYER_SPAWN_X = 5.0f;
     public static final float PLAYER_SPAWN_Y = 20.0f;
