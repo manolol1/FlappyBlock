@@ -15,10 +15,10 @@ public class Constants {
     public static final Color PLAYER_COLOR = Color.FOREST;
     public static final float FLAP_STRENGTH = 45.0f;
     public static final float FLAP_TIME = 0.06f;
-    public static final float GRAVITY = -7.0f;
+    public static final float GRAVITY = -7.2f;
 
     public static final float OBSTACLE_WIDTH = 2.5f;
-    public static final float OBSTACLE_HOLE_Y_DISTANCE = 8.0f; // minimum distance of the hole from top/bottom
+    public static final float OBSTACLE_HOLE_Y_DISTANCE = 9.0f; // minimum distance of the hole from top/bottom
     public static final float OBSTACLE_HOLE_START_SIZE = 10.0f;
     public static final Color OBSTACLE_COLOR = Color.FIREBRICK;
     public static final float OBSTACLE_X_DISTANCE = 20.0f;
