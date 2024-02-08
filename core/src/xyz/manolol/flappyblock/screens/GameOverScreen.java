@@ -30,7 +30,7 @@ public class GameOverScreen extends ScreenAdapter {
 
     private final boolean easyMode;
 
-    public GameOverScreen(boolean easyMode) {
+    public GameOverScreen(boolean easyMode, int score) {
         this.easyMode = easyMode;
 
         camera = new OrthographicCamera();

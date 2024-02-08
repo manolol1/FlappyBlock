@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import xyz.manolol.flappyblock.Constants;
 import xyz.manolol.flappyblock.screens.gameobjects.ObstacleManager;
 import xyz.manolol.flappyblock.screens.gameobjects.Player;
+import xyz.manolol.flappyblock.utils.PrefsManager;
 
 import static xyz.manolol.flappyblock.Main.GAME;
 
@@ -18,6 +19,7 @@ public class GameScreen extends ScreenAdapter {
 
     private final Player player;
     private final ObstacleManager obstacleManager;
+    private final PrefsManager prefs;
 
     private final boolean easyMode;
 
@@ -30,6 +32,7 @@ public class GameScreen extends ScreenAdapter {
 
         player = new Player();
         obstacleManager = new ObstacleManager(player, easyMode);
+        prefs = new PrefsManager();
     }
 
     @Override
@@ -45,7 +48,16 @@ public class GameScreen extends ScreenAdapter {
         obstacleManager.update(delta, shapeRenderer);
 
         if (obstacleManager.isGameOver()) {
-            GAME.setScreen(new GameOverScreen(easyMode));
+            if (easyMode) {
+                if (obstacleManager.getScore() > prefs.getEasyHighscore()) {
+                    prefs.setEasyHighscore(obstacleManager.getScore());
+                }
+            } else {
+                if (obstacleManager.getScore() > prefs.getNormalHighscore()) {
+                    prefs.setNormalHighscore(obstacleManager.getScore());
+                }
+            }
+            GAME.setScreen(new GameOverScreen(easyMode, obstacleManager.getScore()));
             return;
         }
 

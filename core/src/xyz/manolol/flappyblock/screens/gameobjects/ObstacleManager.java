@@ -17,6 +17,7 @@ public class ObstacleManager {
 
     private float timeSinceLastDifficultyIncrease = 0.0f;
 
+    private int score = 0;
     private boolean isGameOver = false;
     private final boolean easyMode;
 
@@ -67,6 +68,7 @@ public class ObstacleManager {
 
     private void spawnObstacle() {
         obstacles.add(new Obstacle(Constants.WORLD_WIDTH, obstacleHoleSize));
+        score++;
     }
 
     private void spawnObstacle(float posX) {
@@ -75,5 +77,9 @@ public class ObstacleManager {
 
     public boolean isGameOver() {
         return isGameOver;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
