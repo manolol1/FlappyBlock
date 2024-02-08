@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kotcrab.vis.ui.VisUI;
 import xyz.manolol.flappyblock.utils.FontManager;
+import xyz.manolol.flappyblock.utils.PrefsManager;
 
 import static xyz.manolol.flappyblock.Main.GAME;
 
@@ -25,13 +26,16 @@ public class GameOverScreen extends ScreenAdapter {
     private final Stage stage;
     private final Skin skin;
     private final FontManager fontManager;
+    private final PrefsManager prefs;
     private Label label;
     private TextButton textButton;
 
     private final boolean easyMode;
+    private final boolean newHighscore;
 
-    public GameOverScreen(boolean easyMode, int score) {
+    public GameOverScreen(boolean easyMode, int score, boolean newHighscore) {
         this.easyMode = easyMode;
+        this.newHighscore = newHighscore;
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(1920, 1080, camera);
@@ -39,6 +43,7 @@ public class GameOverScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
         skin = VisUI.getSkin();
         fontManager = new FontManager("fonts/Roboto-Regular.ttf");
+        prefs = new PrefsManager();
 
         Table root = new Table();
         root.setFillParent(true);
@@ -47,9 +52,28 @@ public class GameOverScreen extends ScreenAdapter {
         skin.get(Label.LabelStyle.class).font = fontManager.getFont(100);
         skin.get(Label.LabelStyle.class).font.getData().markupEnabled = true;
         label = new Label("[FIREBRICK]GAME OVER", skin);
-        root.add(label);
+        root.add(label).padBottom(40).row();
 
-        root.row().pad(50);
+        skin.get(Label.LabelStyle.class).font = fontManager.getFont(60);
+        label = new Label("Score: " + score, skin);
+        root.add(label).padBottom(30).row();
+
+        skin.get(Label.LabelStyle.class).font.getData().markupEnabled = true;
+        skin.get(Label.LabelStyle.class).font = fontManager.getFont(60);
+        if (newHighscore) {
+            if (easyMode) {
+                label = new Label("[FOREST]NEW [WHITE]Highscore (easy): " + prefs.getEasyHighscore(), skin);
+            } else {
+                label = new Label("[FOREST]NEW [WHITE]Highscore (normal): " + prefs.getNormalHighscore(), skin);
+            }
+        } else {
+            if (easyMode) {
+                label = new Label("Highscore (EASY): " + prefs.getEasyHighscore(), skin);
+            } else {
+                label = new Label("Highscore (NORMAL): " + prefs.getNormalHighscore(), skin);
+            }
+        }
+        root.add(label).padBottom(60).row();
 
         skin.get(TextButton.TextButtonStyle.class).font = fontManager.getFont(60);
         textButton = new TextButton("TRY AGAIN", skin);
@@ -60,7 +84,7 @@ public class GameOverScreen extends ScreenAdapter {
                 GAME.setScreen(new GameScreen(easyMode));
             }
         });
-        root.add(textButton).width(400).row();
+        root.add(textButton).padBottom(50).width(400).row();
 
         textButton = new TextButton("MAIN MENU", skin);
         textButton.pad(15);

@@ -23,6 +23,8 @@ public class GameScreen extends ScreenAdapter {
 
     private final boolean easyMode;
 
+    private boolean newHighscore = false;
+
     public GameScreen(boolean easyMode) {
         this.easyMode = easyMode;
 
@@ -51,13 +53,15 @@ public class GameScreen extends ScreenAdapter {
             if (easyMode) {
                 if (obstacleManager.getScore() > prefs.getEasyHighscore()) {
                     prefs.setEasyHighscore(obstacleManager.getScore());
+                    newHighscore = true;
                 }
             } else {
                 if (obstacleManager.getScore() > prefs.getNormalHighscore()) {
                     prefs.setNormalHighscore(obstacleManager.getScore());
+                    newHighscore = true;
                 }
             }
-            GAME.setScreen(new GameOverScreen(easyMode, obstacleManager.getScore()));
+            GAME.setScreen(new GameOverScreen(easyMode, obstacleManager.getScore(), newHighscore));
             return;
         }
 
