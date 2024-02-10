@@ -56,30 +56,33 @@ public class MainMenuScreen extends ScreenAdapter {
         root.add(label).padBottom(80).row();
 
         skin.get(TextButton.TextButtonStyle.class).font = fontManager.getFont(60);
-        textButton = new TextButton("START GAME", skin);
-        textButton.pad(15);
-        textButton.addListener(new ChangeListener() {
+        TextButton startGameButton = new TextButton("START GAME", skin);
+        startGameButton.pad(15);
+        startGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 GAME.setScreen(new GameScreen(easyMode));
             }
         });
-        root.add(textButton).width(550).padBottom(60).row();
+        root.add(startGameButton).width(550).padBottom(60).row();
 
-        textButton = new TextButton("Easy Mode: " + (easyMode ? "ON" : "OFF"), skin);
-        textButton.pad(15);
-        textButton.addListener(new ChangeListener() {
+        TextTooltip easyModeTooltip = new TextTooltip(
+                "When Easy Mode is enabled, the difficulty always stays the same.",
+                tooltipManager, textTooltipStyle
+        );
+        easyModeTooltip.setInstant(true);
+
+        TextButton easyModeButton = new TextButton("Easy Mode: " + (easyMode ? "ON" : "OFF"), skin);
+        easyModeButton.pad(15);
+        easyModeButton.addListener(easyModeTooltip);
+        easyModeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 easyMode = !easyMode;
-                textButton.setText("Easy Mode: " + (easyMode ? "ON" : "OFF"));
+                easyModeButton.setText("Easy Mode: " + (easyMode ? "ON" : "OFF"));
             }
         });
-        textButton.addListener(
-                new TextTooltip("When Easy Mode is enabled, the difficulty always stays the same.",
-                        tooltipManager, textTooltipStyle)
-        );
-        root.add(textButton).width(550).row();
+        root.add(easyModeButton).width(550).row();
     }
 
     @Override
