@@ -26,10 +26,10 @@ public class GameScreen extends ScreenAdapter {
     private final ShapeRenderer shapeRenderer;
 
     private final Player player;
+    private final DifficultyManager difficultyManager;
     private final ObstacleManager obstacleManager;
     private final CollisionChecker collisionChecker;
     private final HighscoreManager highscoreManager;
-
 
     private final Stage stage;
     private final Skin skin;
@@ -56,7 +56,8 @@ public class GameScreen extends ScreenAdapter {
         fontManager = new FontManager("fonts/Roboto-Regular.ttf");
 
         player = new Player();
-        obstacleManager = new ObstacleManager(player, easyMode);
+        difficultyManager = new DifficultyManager();
+        obstacleManager = new ObstacleManager(player, easyMode, difficultyManager);
         collisionChecker = new CollisionChecker();
         highscoreManager = new HighscoreManager();
 
@@ -83,13 +84,14 @@ public class GameScreen extends ScreenAdapter {
         player.update(delta);
         player.draw(shapeRenderer);
 
+        difficultyManager.update(delta);
+
         obstacleManager.update(delta);
         obstacleManager.draw(shapeRenderer);
 
         // Check if game is over
         if (collisionChecker.isColliding(obstacleManager.getObstacles(), player)) {
             highscoreManager.updateHighscore(obstacleManager.getScore(), easyMode);
-
             GAME.setScreen(new GameOverScreen(easyMode, obstacleManager.getScore(), highscoreManager.isNewHighscore()));
             return;
         }

@@ -11,18 +11,15 @@ public class ObstacleManager {
     private final Array<Obstacle> obstacles;
 
     private final Player player;
-
-    private float obstacleHoleSize = Constants.OBSTACLE_HOLE_START_SIZE;
-    private float obstacleSpeed = Constants.OBSTACLE_START_SPEED;
-
-    private float timeSinceLastDifficultyIncrease = 0.0f;
+    private final DifficultyManager difficultyManager;
 
     private int score = 0;
     private boolean isGameOver = false;
     private final boolean easyMode;
 
-    public ObstacleManager(Player player, boolean easyMode) {
+    public ObstacleManager(Player player, boolean easyMode, DifficultyManager difficultyManager) {
         this.player = player;
+        this.difficultyManager = difficultyManager;
         this.easyMode = easyMode;
         obstacles = new Array<>();
         spawnObstacle(Constants.WORLD_WIDTH / 2);
@@ -33,31 +30,8 @@ public class ObstacleManager {
         if (obstacles.peek().posX < Constants.WORLD_WIDTH - Constants.OBSTACLE_X_DISTANCE) {
             spawnObstacle();
         }
-
-        if (!easyMode) {
-            timeSinceLastDifficultyIncrease += delta;
-
-            if (timeSinceLastDifficultyIncrease > Constants.DIFFICULTY_INCREASE_INTERVAL) {
-                obstacleHoleSize -= Constants.OBSTACLE_HOLE_SIZE_DECREASE;
-                obstacleSpeed += Constants.OBSTACLE_SPEED_INCREASE;
-
-                if (obstacleHoleSize < Constants.OBSTACLE_HOLE_SIZE_MIN) obstacleHoleSize = Constants.OBSTACLE_HOLE_SIZE_MIN;
-                if (obstacleSpeed > Constants.OBSTACLE_SPEED_MAX) obstacleSpeed = Constants.OBSTACLE_SPEED_MAX;
-
-                timeSinceLastDifficultyIncrease = 0.0f;
-
-                Gdx.app.log("DIFFICULTY INCREASED",
-                        "obstacleHoleSize: " + obstacleHoleSize + " | " + "obstacleSpeed: " + obstacleSpeed);
-            }
-        }
-
-        Iterator<Obstacle> iterator = obstacles.iterator();
-        while (iterator.hasNext()) {
-            Obstacle obstacle = iterator.next();
-            obstacle.posX -= obstacleSpeed * delta;
-
-            if (obstacle.posX < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
-        }
+        
+        updateObstaclePositions(delta);
     }
 
     public void draw(ShapeRenderer shapeRenderer) {
@@ -66,13 +40,23 @@ public class ObstacleManager {
         }
     }
 
+    private void updateObstaclePositions (float delta) {
+        Iterator<Obstacle> iterator = obstacles.iterator();
+        while (iterator.hasNext()) {
+            Obstacle obstacle = iterator.next();
+            obstacle.posX -= difficultyManager.getObstacleSpeed() * delta;
+
+            if (obstacle.posX < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
+        }
+    }
+
     private void spawnObstacle() {
-        obstacles.add(new Obstacle(Constants.WORLD_WIDTH, obstacleHoleSize));
+        obstacles.add(new Obstacle(Constants.WORLD_WIDTH, difficultyManager.getObstacleHoleSize()));
         score++;
     }
 
     private void spawnObstacle(float posX) {
-        obstacles.add(new Obstacle(posX, obstacleHoleSize));
+        obstacles.add(new Obstacle(posX, difficultyManager.getObstacleHoleSize()));
     }
 
     public Array<Obstacle> getObstacles() {
