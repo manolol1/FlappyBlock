@@ -4,10 +4,8 @@ import com.badlogic.gdx.utils.Array;
 
 public class CollisionChecker {
     public boolean isColliding (Array<Obstacle> obstacles, Player player) {
-        for (Obstacle obstacle : obstacles) {
-            if (player.getRect().overlaps(obstacle.getBottom()) || player.getRect().overlaps(obstacle.getTop())) {
-                return true;
-            }
+        if (player.getRect().overlaps(obstacles.first().getBottom()) || player.getRect().overlaps(obstacles.first().getTop())) {
+            return true;
         }
         return false;
     }
