@@ -1,4 +1,4 @@
-package xyz.manolol.flappyblock.screens;
+package xyz.manolol.flappyblock.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -8,13 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kotcrab.vis.ui.VisUI;
 import xyz.manolol.flappyblock.Constants;
-import xyz.manolol.flappyblock.screens.gameobjects.ObstacleManager;
-import xyz.manolol.flappyblock.screens.gameobjects.Player;
+import xyz.manolol.flappyblock.screens.gameover.GameOverScreen;
 import xyz.manolol.flappyblock.utils.FontManager;
 import xyz.manolol.flappyblock.utils.PrefsManager;
 
@@ -28,8 +26,10 @@ public class GameScreen extends ScreenAdapter {
     private final ShapeRenderer shapeRenderer;
 
     private final Player player;
+    private final DifficultyManager difficultyManager;
     private final ObstacleManager obstacleManager;
-    private final PrefsManager prefs;
+    private final CollisionChecker collisionChecker;
+    private final HighscoreManager highscoreManager;
 
     private final Stage stage;
     private final Skin skin;
@@ -38,8 +38,6 @@ public class GameScreen extends ScreenAdapter {
     private Table table;
 
     private final boolean easyMode;
-
-    private boolean newHighscore = false;
 
     public GameScreen(boolean easyMode) {
         this.easyMode = easyMode;
@@ -56,8 +54,10 @@ public class GameScreen extends ScreenAdapter {
         fontManager = new FontManager("fonts/Roboto-Regular.ttf");
 
         player = new Player();
-        obstacleManager = new ObstacleManager(player, easyMode);
-        prefs = new PrefsManager();
+        difficultyManager = new DifficultyManager();
+        obstacleManager = new ObstacleManager(player, easyMode, difficultyManager);
+        collisionChecker = new CollisionChecker();
+        highscoreManager = new HighscoreManager();
 
         // Score Text
         skin.get(Label.LabelStyle.class).font = fontManager.getFont(80);
@@ -82,21 +82,15 @@ public class GameScreen extends ScreenAdapter {
         player.update(delta);
         player.draw(shapeRenderer);
 
-        obstacleManager.update(delta, shapeRenderer);
+        difficultyManager.update(delta);
 
-        if (obstacleManager.isGameOver()) {
-            if (easyMode) {
-                if (obstacleManager.getScore() > prefs.getEasyHighscore()) {
-                    prefs.setEasyHighscore(obstacleManager.getScore());
-                    newHighscore = true;
-                }
-            } else {
-                if (obstacleManager.getScore() > prefs.getNormalHighscore()) {
-                    prefs.setNormalHighscore(obstacleManager.getScore());
-                    newHighscore = true;
-                }
-            }
-            GAME.setScreen(new GameOverScreen(easyMode, obstacleManager.getScore(), newHighscore));
+        obstacleManager.update(delta);
+        obstacleManager.draw(shapeRenderer);
+
+        // Check if game is over
+        if (collisionChecker.isColliding(obstacleManager.getObstacles(), player)) {
+            highscoreManager.updateHighscore(obstacleManager.getScore(), easyMode);
+            GAME.setScreen(new GameOverScreen(easyMode, obstacleManager.getScore(), highscoreManager.isNewHighscore()));
             return;
         }
 

@@ -1,6 +1,5 @@
-package xyz.manolol.flappyblock.screens.gameobjects;
+package xyz.manolol.flappyblock.screens.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
