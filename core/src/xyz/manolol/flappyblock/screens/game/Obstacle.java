@@ -6,15 +6,17 @@ import com.badlogic.gdx.math.Rectangle;
 import xyz.manolol.flappyblock.Constants;
 
 public class Obstacle {
-    private Rectangle top;
-    private Rectangle bottom;
+    private final Rectangle top;
+    private final Rectangle bottom;
 
-    private float holeStart;
-
-    protected float posX;
+    private float posX;
 
     public Obstacle(float posX, float holeSize) {
-        holeStart = MathUtils.random(Constants.OBSTACLE_HOLE_Y_DISTANCE, Constants.WORLD_HEIGHT - Constants.OBSTACLE_HOLE_Y_DISTANCE - holeSize);
+        // get random y position of the start of the hole
+        float holeStart = MathUtils.random(
+                Constants.OBSTACLE_HOLE_Y_DISTANCE,
+                Constants.WORLD_HEIGHT - Constants.OBSTACLE_HOLE_Y_DISTANCE - holeSize
+        );
 
         this.posX = posX;
 
@@ -37,5 +39,13 @@ public class Obstacle {
 
     public Rectangle getBottom() {
         return bottom;
+    }
+
+    public float getPosX() {
+        return posX;
+    }
+
+    public void setPosX(float posX) {
+        this.posX = posX;
     }
 }

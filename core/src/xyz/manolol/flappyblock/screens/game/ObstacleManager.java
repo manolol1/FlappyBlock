@@ -38,7 +38,7 @@ public class ObstacleManager {
     }
 
     private void spawnObstacleIfNeeded() {
-        if (obstacles.peek().posX < Constants.WORLD_WIDTH - Constants.OBSTACLE_X_DISTANCE) {
+        if (obstacles.peek().getPosX() < Constants.WORLD_WIDTH - Constants.OBSTACLE_X_DISTANCE) {
             spawnObstacle();
             score++;
         }
@@ -54,7 +54,7 @@ public class ObstacleManager {
 
     private void updateObstaclePositions(float delta) {
         for (Obstacle obstacle : obstacles) {
-            obstacle.posX -= difficultyManager.getObstacleSpeed() * delta;
+            obstacle.setPosX(obstacle.getPosX() - difficultyManager.getObstacleSpeed() * delta);
         }
     }
 
@@ -62,7 +62,7 @@ public class ObstacleManager {
         Iterator<Obstacle> iterator = obstacles.iterator();
         while (iterator.hasNext()) {
             Obstacle obstacle = iterator.next();
-            if (obstacle.posX < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
+            if (obstacle.getPosX() < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
         }
     }
 
