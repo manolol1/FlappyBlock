@@ -14,13 +14,10 @@ public class ObstacleManager {
     private final DifficultyManager difficultyManager;
 
     private int score = 0;
-    private boolean isGameOver = false;
-    private final boolean easyMode;
 
     public ObstacleManager(Player player, boolean easyMode, DifficultyManager difficultyManager) {
         this.player = player;
         this.difficultyManager = difficultyManager;
-        this.easyMode = easyMode;
         obstacles = new Array<>();
 
         spawnInitialObstacles();

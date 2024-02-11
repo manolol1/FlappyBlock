@@ -39,8 +39,6 @@ public class GameScreen extends ScreenAdapter {
 
     private final boolean easyMode;
 
-    private boolean newHighscore = false;
-
     public GameScreen(boolean easyMode) {
         this.easyMode = easyMode;
 
