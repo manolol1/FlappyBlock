@@ -22,15 +22,12 @@ public class ObstacleManager {
         this.difficultyManager = difficultyManager;
         this.easyMode = easyMode;
         obstacles = new Array<>();
-        spawnObstacle(Constants.WORLD_WIDTH / 2);
-        spawnObstacle(Constants.WORLD_WIDTH / 2 + Constants.OBSTACLE_X_DISTANCE);
+
+        spawnInitialObstacles();
     }
 
     public void update(float delta) {
-        if (obstacles.peek().posX < Constants.WORLD_WIDTH - Constants.OBSTACLE_X_DISTANCE) {
-            spawnObstacle();
-        }
-        
+        spawnObstacleIfNeeded();
         updateObstaclePositions(delta);
     }
 
@@ -40,13 +37,14 @@ public class ObstacleManager {
         }
     }
 
-    private void updateObstaclePositions (float delta) {
-        Iterator<Obstacle> iterator = obstacles.iterator();
-        while (iterator.hasNext()) {
-            Obstacle obstacle = iterator.next();
-            obstacle.posX -= difficultyManager.getObstacleSpeed() * delta;
+    private void spawnInitialObstacles() {
+        spawnObstacle(Constants.WORLD_WIDTH / 2);
+        spawnObstacle(Constants.WORLD_WIDTH / 2 + Constants.OBSTACLE_X_DISTANCE);
+    }
 
-            if (obstacle.posX < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
+    private void spawnObstacleIfNeeded() {
+        if (obstacles.peek().posX < Constants.WORLD_WIDTH - Constants.OBSTACLE_X_DISTANCE) {
+            spawnObstacle();
         }
     }
 
@@ -57,6 +55,16 @@ public class ObstacleManager {
 
     private void spawnObstacle(float posX) {
         obstacles.add(new Obstacle(posX, difficultyManager.getObstacleHoleSize()));
+    }
+
+    private void updateObstaclePositions(float delta) {
+        Iterator<Obstacle> iterator = obstacles.iterator();
+        while (iterator.hasNext()) {
+            Obstacle obstacle = iterator.next();
+            obstacle.posX -= difficultyManager.getObstacleSpeed() * delta;
+
+            if (obstacle.posX < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
+        }
     }
 
     public Array<Obstacle> getObstacles() {
