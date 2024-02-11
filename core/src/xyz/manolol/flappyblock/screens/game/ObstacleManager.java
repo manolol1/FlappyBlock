@@ -8,9 +8,9 @@ import xyz.manolol.flappyblock.Constants;
 import java.util.Iterator;
 
 public class ObstacleManager {
-    Array<Obstacle> obstacles;
+    private final Array<Obstacle> obstacles;
 
-    Player player;
+    private final Player player;
 
     private float obstacleHoleSize = Constants.OBSTACLE_HOLE_START_SIZE;
     private float obstacleSpeed = Constants.OBSTACLE_START_SPEED;
@@ -56,10 +56,6 @@ public class ObstacleManager {
             Obstacle obstacle = iterator.next();
             obstacle.posX -= obstacleSpeed * delta;
 
-            if (player.getRect().overlaps(obstacle.getBottom()) || player.getRect().overlaps(obstacle.getTop())) {
-                isGameOver = true;
-            }
-
             if (obstacle.posX < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
 
             obstacle.draw(shapeRenderer);
@@ -75,8 +71,8 @@ public class ObstacleManager {
         obstacles.add(new Obstacle(posX, obstacleHoleSize));
     }
 
-    public boolean isGameOver() {
-        return isGameOver;
+    public Array<Obstacle> getObstacles() {
+        return obstacles;
     }
 
     public int getScore() {

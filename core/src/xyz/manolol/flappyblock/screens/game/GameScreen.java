@@ -27,6 +27,7 @@ public class GameScreen extends ScreenAdapter {
 
     private final Player player;
     private final ObstacleManager obstacleManager;
+    private final CollisionChecker collisionChecker;
     private final PrefsManager prefs;
 
     private final Stage stage;
@@ -55,6 +56,7 @@ public class GameScreen extends ScreenAdapter {
 
         player = new Player();
         obstacleManager = new ObstacleManager(player, easyMode);
+        collisionChecker = new CollisionChecker();
         prefs = new PrefsManager();
 
         // Score Text
@@ -82,7 +84,7 @@ public class GameScreen extends ScreenAdapter {
 
         obstacleManager.update(delta, shapeRenderer);
 
-        if (obstacleManager.isGameOver()) {
+        if (collisionChecker.isColliding(obstacleManager.getObstacles(), player)) {
             if (easyMode) {
                 if (obstacleManager.getScore() > prefs.getEasyHighscore()) {
                     prefs.setEasyHighscore(obstacleManager.getScore());
