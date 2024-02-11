@@ -1,4 +1,4 @@
-package xyz.manolol.flappyblock.screens;
+package xyz.manolol.flappyblock.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -8,13 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kotcrab.vis.ui.VisUI;
 import xyz.manolol.flappyblock.Constants;
-import xyz.manolol.flappyblock.screens.gameobjects.ObstacleManager;
-import xyz.manolol.flappyblock.screens.gameobjects.Player;
+import xyz.manolol.flappyblock.screens.gameover.GameOverScreen;
 import xyz.manolol.flappyblock.utils.FontManager;
 import xyz.manolol.flappyblock.utils.PrefsManager;
 

@@ -1,8 +1,7 @@
-package xyz.manolol.flappyblock.screens;
+package xyz.manolol.flappyblock.screens.mainmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kotcrab.vis.ui.VisUI;
 import xyz.manolol.flappyblock.Constants;
+import xyz.manolol.flappyblock.screens.game.GameScreen;
 import xyz.manolol.flappyblock.utils.FontManager;
 
 import static xyz.manolol.flappyblock.Main.GAME;

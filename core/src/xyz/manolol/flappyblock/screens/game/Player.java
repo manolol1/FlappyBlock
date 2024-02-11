@@ -1,4 +1,4 @@
-package xyz.manolol.flappyblock.screens.gameobjects;
+package xyz.manolol.flappyblock.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

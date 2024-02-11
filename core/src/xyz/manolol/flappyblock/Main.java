@@ -2,7 +2,7 @@ package xyz.manolol.flappyblock;
 
 import com.badlogic.gdx.Game;
 import com.kotcrab.vis.ui.VisUI;
-import xyz.manolol.flappyblock.screens.MainMenuScreen;
+import xyz.manolol.flappyblock.screens.mainmenu.MainMenuScreen;
 
 public class Main extends Game {
 
