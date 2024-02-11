@@ -56,6 +56,7 @@ public class MainMenuScreen extends ScreenAdapter {
         root.add(label).padBottom(80).row();
 
         skin.get(TextButton.TextButtonStyle.class).font = fontManager.getFont(60);
+
         TextButton startGameButton = new TextButton("START GAME", skin);
         startGameButton.pad(15);
         startGameButton.addListener(new ChangeListener() {
@@ -82,7 +83,18 @@ public class MainMenuScreen extends ScreenAdapter {
                 easyModeButton.setText("Easy Mode: " + (easyMode ? "ON" : "OFF"));
             }
         });
-        root.add(easyModeButton).width(550).row();
+        root.add(easyModeButton).width(550).padBottom(60).row();
+
+        TextButton exitGameButton = new TextButton("EXIT", skin);
+        exitGameButton.pad(15);
+        exitGameButton.addListener(easyModeTooltip);
+        exitGameButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
+        root.add(exitGameButton).width(550).row();
     }
 
     @Override
