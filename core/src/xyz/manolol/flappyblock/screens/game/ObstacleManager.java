@@ -9,14 +9,11 @@ import java.util.Iterator;
 
 public class ObstacleManager {
     private final Array<Obstacle> obstacles;
-
-    private final Player player;
     private final DifficultyManager difficultyManager;
 
     private int score = 0;
 
-    public ObstacleManager(Player player, boolean easyMode, DifficultyManager difficultyManager) {
-        this.player = player;
+    public ObstacleManager(DifficultyManager difficultyManager) {
         this.difficultyManager = difficultyManager;
         obstacles = new Array<>();
 
@@ -26,6 +23,7 @@ public class ObstacleManager {
     public void update(float delta) {
         spawnObstacleIfNeeded();
         updateObstaclePositions(delta);
+        removeOldObstacles();
     }
 
     public void draw(ShapeRenderer shapeRenderer) {
@@ -42,12 +40,12 @@ public class ObstacleManager {
     private void spawnObstacleIfNeeded() {
         if (obstacles.peek().posX < Constants.WORLD_WIDTH - Constants.OBSTACLE_X_DISTANCE) {
             spawnObstacle();
+            score++;
         }
     }
 
     private void spawnObstacle() {
-        obstacles.add(new Obstacle(Constants.WORLD_WIDTH, difficultyManager.getObstacleHoleSize()));
-        score++;
+        spawnObstacle(Constants.WORLD_WIDTH);
     }
 
     private void spawnObstacle(float posX) {
@@ -55,11 +53,15 @@ public class ObstacleManager {
     }
 
     private void updateObstaclePositions(float delta) {
+        for (Obstacle obstacle : obstacles) {
+            obstacle.posX -= difficultyManager.getObstacleSpeed() * delta;
+        }
+    }
+
+    private void removeOldObstacles() {
         Iterator<Obstacle> iterator = obstacles.iterator();
         while (iterator.hasNext()) {
             Obstacle obstacle = iterator.next();
-            obstacle.posX -= difficultyManager.getObstacleSpeed() * delta;
-
             if (obstacle.posX < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
         }
     }

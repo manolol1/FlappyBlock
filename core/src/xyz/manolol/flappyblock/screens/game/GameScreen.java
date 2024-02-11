@@ -55,7 +55,7 @@ public class GameScreen extends ScreenAdapter {
 
         player = new Player();
         difficultyManager = new DifficultyManager();
-        obstacleManager = new ObstacleManager(player, easyMode, difficultyManager);
+        obstacleManager = new ObstacleManager(difficultyManager);
         collisionChecker = new CollisionChecker();
         highscoreManager = new HighscoreManager();
 
