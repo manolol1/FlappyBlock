@@ -28,7 +28,8 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final ObstacleManager obstacleManager;
     private final CollisionChecker collisionChecker;
-    private final PrefsManager prefs;
+    private final HighscoreManager highscoreManager;
+
 
     private final Stage stage;
     private final Skin skin;
@@ -57,7 +58,7 @@ public class GameScreen extends ScreenAdapter {
         player = new Player();
         obstacleManager = new ObstacleManager(player, easyMode);
         collisionChecker = new CollisionChecker();
-        prefs = new PrefsManager();
+        highscoreManager = new HighscoreManager();
 
         // Score Text
         skin.get(Label.LabelStyle.class).font = fontManager.getFont(80);
@@ -82,21 +83,14 @@ public class GameScreen extends ScreenAdapter {
         player.update(delta);
         player.draw(shapeRenderer);
 
-        obstacleManager.update(delta, shapeRenderer);
+        obstacleManager.update(delta);
+        obstacleManager.draw(shapeRenderer);
 
+        // Check if game is over
         if (collisionChecker.isColliding(obstacleManager.getObstacles(), player)) {
-            if (easyMode) {
-                if (obstacleManager.getScore() > prefs.getEasyHighscore()) {
-                    prefs.setEasyHighscore(obstacleManager.getScore());
-                    newHighscore = true;
-                }
-            } else {
-                if (obstacleManager.getScore() > prefs.getNormalHighscore()) {
-                    prefs.setNormalHighscore(obstacleManager.getScore());
-                    newHighscore = true;
-                }
-            }
-            GAME.setScreen(new GameOverScreen(easyMode, obstacleManager.getScore(), newHighscore));
+            highscoreManager.updateHighscore(obstacleManager.getScore(), easyMode);
+
+            GAME.setScreen(new GameOverScreen(easyMode, obstacleManager.getScore(), highscoreManager.isNewHighscore()));
             return;
         }
 

@@ -29,7 +29,7 @@ public class ObstacleManager {
         spawnObstacle(Constants.WORLD_WIDTH / 2 + Constants.OBSTACLE_X_DISTANCE);
     }
 
-    public void update(float delta, ShapeRenderer shapeRenderer) {
+    public void update(float delta) {
         if (obstacles.peek().posX < Constants.WORLD_WIDTH - Constants.OBSTACLE_X_DISTANCE) {
             spawnObstacle();
         }
@@ -57,7 +57,11 @@ public class ObstacleManager {
             obstacle.posX -= obstacleSpeed * delta;
 
             if (obstacle.posX < 0 - Constants.OBSTACLE_WIDTH) iterator.remove();
+        }
+    }
 
+    public void draw(ShapeRenderer shapeRenderer) {
+        for (Obstacle obstacle : obstacles) {
             obstacle.draw(shapeRenderer);
         }
     }
