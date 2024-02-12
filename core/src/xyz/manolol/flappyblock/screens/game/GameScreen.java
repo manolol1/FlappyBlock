@@ -14,7 +14,6 @@ import com.kotcrab.vis.ui.VisUI;
 import xyz.manolol.flappyblock.Constants;
 import xyz.manolol.flappyblock.screens.gameover.GameOverScreen;
 import xyz.manolol.flappyblock.utils.FontManager;
-import xyz.manolol.flappyblock.utils.PrefsManager;
 
 import static xyz.manolol.flappyblock.Main.GAME;
 

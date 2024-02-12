@@ -27,4 +27,9 @@ public class PrefsManager {
     public int getEasyHighscore() {
         return prefs.getInteger("easyHighscore", 0);
     }
+
+    public void resetHighscores() {
+        setEasyHighscore(0);
+        setNormalHighscore(0);
+    }
 }

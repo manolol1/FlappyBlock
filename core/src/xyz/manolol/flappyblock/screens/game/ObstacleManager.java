@@ -1,6 +1,5 @@
 package xyz.manolol.flappyblock.screens.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import xyz.manolol.flappyblock.Constants;

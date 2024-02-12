@@ -13,6 +13,7 @@ import com.kotcrab.vis.ui.VisUI;
 import xyz.manolol.flappyblock.Constants;
 import xyz.manolol.flappyblock.screens.game.GameScreen;
 import xyz.manolol.flappyblock.utils.FontManager;
+import xyz.manolol.flappyblock.utils.PrefsManager;
 
 import static xyz.manolol.flappyblock.Main.GAME;
 
@@ -23,9 +24,8 @@ public class MainMenuScreen extends ScreenAdapter {
     private final Stage stage;
     private final Skin skin;
     private final FontManager fontManager;
+    private final PrefsManager prefs;
     private final TooltipManager tooltipManager;
-    private Label label;
-    private TextButton textButton;
 
     private boolean easyMode = false;
 
@@ -36,6 +36,7 @@ public class MainMenuScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
         skin = VisUI.getSkin();
         fontManager = new FontManager("fonts/Roboto-Regular.ttf");
+        prefs = new PrefsManager();
         tooltipManager = new TooltipManager();
         tooltipManager.instant();
         Table root = new Table();
@@ -52,8 +53,8 @@ public class MainMenuScreen extends ScreenAdapter {
 
         skin.get(Label.LabelStyle.class).font = fontManager.getFont(100);
         skin.get(Label.LabelStyle.class).font.getData().markupEnabled = true;
-        label = new Label("[FOREST]FLAPPY[OLIVE]BLOCK", skin);
-        root.add(label).padBottom(80).row();
+        Label titleLabel = new Label("[FOREST]FLAPPY[OLIVE]BLOCK", skin);
+        root.add(titleLabel).padBottom(50).row();
 
         skin.get(TextButton.TextButtonStyle.class).font = fontManager.getFont(60);
 
@@ -65,7 +66,7 @@ public class MainMenuScreen extends ScreenAdapter {
                 GAME.setScreen(new GameScreen(easyMode));
             }
         });
-        root.add(startGameButton).width(550).padBottom(60).row();
+        root.add(startGameButton).width(550).padBottom(30).row();
 
         TextTooltip easyModeTooltip = new TextTooltip(
                 "When Easy Mode is enabled, the difficulty always stays the same.",
@@ -83,7 +84,7 @@ public class MainMenuScreen extends ScreenAdapter {
                 easyModeButton.setText("Easy Mode: " + (easyMode ? "ON" : "OFF"));
             }
         });
-        root.add(easyModeButton).width(550).padBottom(60).row();
+        root.add(easyModeButton).width(550).padBottom(30).row();
 
         TextButton exitGameButton = new TextButton("EXIT", skin);
         exitGameButton.pad(15);
@@ -94,7 +95,36 @@ public class MainMenuScreen extends ScreenAdapter {
                 Gdx.app.exit();
             }
         });
-        root.add(exitGameButton).width(550).row();
+        root.add(exitGameButton).width(550).padBottom(40).row();
+
+        skin.get(Label.LabelStyle.class).font = fontManager.getFont(60);
+        skin.get(Label.LabelStyle.class).font.getData().markupEnabled = true;
+        Label highscoresLabel = new Label("[FOREST]Highscores:", skin);
+        root.add(highscoresLabel).padBottom(15).row();
+
+        skin.get(Label.LabelStyle.class).font = fontManager.getFont(50);
+        skin.get(Label.LabelStyle.class).font.getData().markupEnabled = true;
+        Label normalHighscoreLabel = new Label("Normal Mode: " + prefs.getNormalHighscore(), skin);
+        root.add(normalHighscoreLabel).padBottom(10).row();
+
+        skin.get(Label.LabelStyle.class).font = fontManager.getFont(50);
+        skin.get(Label.LabelStyle.class).font.getData().markupEnabled = true;
+        Label easyHighscoreLabel = new Label("Easy Mode: " + prefs.getEasyHighscore(), skin);
+        root.add(easyHighscoreLabel).padBottom(30).row();
+
+        skin.get(TextButton.TextButtonStyle.class).font = fontManager.getFont(40);
+
+        TextButton resetButton = new TextButton("Reset Highscores", skin);
+        resetButton.pad(15);
+        resetButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                prefs.resetHighscores();
+                easyHighscoreLabel.setText("Easy Mode: " + prefs.getEasyHighscore());
+                normalHighscoreLabel.setText("Normal Mode: " + prefs.getNormalHighscore());
+            }
+        });
+        root.add(resetButton).width(550).padBottom(10).row();
     }
 
     @Override
