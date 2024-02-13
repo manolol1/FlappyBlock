@@ -112,16 +112,33 @@ public class MainMenuScreen extends ScreenAdapter {
         Label easyHighscoreLabel = new Label("Easy Mode: " + prefs.getEasyHighscore(), skin);
         root.add(easyHighscoreLabel).padBottom(30).row();
 
-        skin.get(TextButton.TextButtonStyle.class).font = fontManager.getFont(40);
+        skin.get(Label.LabelStyle.class).font = fontManager.getFont(60);
+        skin.get(TextButton.TextButtonStyle.class).font = fontManager.getFont(60);
+        Dialog resetDialog = new Dialog("", skin) {
+            public void result(Object obj) {
+                if (obj.equals(true)) {
+                    prefs.resetHighscores();
+                    easyHighscoreLabel.setText("Easy Mode: " + prefs.getEasyHighscore());
+                    normalHighscoreLabel.setText("Normal Mode: " + prefs.getNormalHighscore());
+                    Gdx.app.log("RESET", "Highscore has been reset.");
+                } else {
+                    Gdx.app.log("RESET", "Reset action cancelled");
+                }
+            }
+        };
+        resetDialog.text("Reset Highscore?");
+        resetDialog.button("Yes", true); //sends "true" as the result
+        resetDialog.button("No", false);  //sends "false" as the result
+        resetDialog.pad(60);
 
+        skin.get(TextButton.TextButtonStyle.class).font = fontManager.getFont(40);
         TextButton resetButton = new TextButton("Reset Highscores", skin);
         resetButton.pad(15);
         resetButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                prefs.resetHighscores();
-                easyHighscoreLabel.setText("Easy Mode: " + prefs.getEasyHighscore());
-                normalHighscoreLabel.setText("Normal Mode: " + prefs.getNormalHighscore());
+                stage.addActor(resetDialog.show(stage));
+                Gdx.app.log("RESET", "Confirmation dialog triggered");
             }
         });
         root.add(resetButton).width(550).padBottom(10).row();
