@@ -88,7 +88,6 @@ public class MainMenuScreen extends ScreenAdapter {
 
         TextButton exitGameButton = new TextButton("EXIT", skin);
         exitGameButton.pad(15);
-        exitGameButton.addListener(easyModeTooltip);
         exitGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
