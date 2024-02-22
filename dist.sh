@@ -7,7 +7,7 @@ FILE_NAME="FlappyBlock"
 
 OUTPUT_DIR="out"
 
-# remove/clear outpit directory
+# remove/clear output directory
 rm -r $OUTPUT_DIR
 
 # Create the output directory
